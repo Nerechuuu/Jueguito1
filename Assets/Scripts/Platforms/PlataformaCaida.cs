@@ -3,7 +3,7 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody2D))]
 public class PlataformaCaida : MonoBehaviour
 {
-    [Header("Configuración de la Plataforma")]
+    [Header("Configuraciï¿½n de la Plataforma")]
     [SerializeField] private LayerMask capaJugador;
 
     private Rigidbody2D rb;
@@ -12,10 +12,12 @@ public class PlataformaCaida : MonoBehaviour
 
 
     private void Awake()
-    {
-        rb = GetComponent<Rigidbody2D>();
-        rb.bodyType = RigidbodyType2D.Static;
-    }
+{
+    rb = GetComponent<Rigidbody2D>();
+    rb.bodyType = RigidbodyType2D.Static;
+    rb.constraints = RigidbodyConstraints2D.FreezeRotation; // Evita que la plataforma gire
+}
+
 
     private void Update()
     {
@@ -26,14 +28,6 @@ public class PlataformaCaida : MonoBehaviour
                 rb.bodyType = RigidbodyType2D.Dynamic;
             }
         }
-        //else
-        //{
-        //    if (rb.bodyType != RigidbodyType2D.Static)
-        //    {
-        //        rb.velocity = Vector2.zero;
-        //        rb.bodyType = RigidbodyType2D.Static;
-        //    }
-        //}
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
