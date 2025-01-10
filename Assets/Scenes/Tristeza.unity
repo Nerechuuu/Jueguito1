@@ -5597,6 +5597,7 @@ GameObject:
   m_Component:
   - component: {fileID: 493148518}
   - component: {fileID: 493148519}
+  - component: {fileID: 493148520}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -5631,6 +5632,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &493148520
+MonoBehaviour:
+  m_ObjectHideFlags: 3
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 493148517}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 68bb026fafb42b14791938953eaace77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_NoiseProfile: {fileID: 11400000, guid: 69ce8388f6785dd4c8c39915efece2f4, type: 2}
+  m_PivotOffset: {x: 0, y: 0, z: 0}
+  m_AmplitudeGain: 0.1
+  m_FrequencyGain: 0.1
+  mNoiseOffsets: {x: 0, y: 0, z: 0}
 --- !u!1 &506047679
 GameObject:
   m_ObjectHideFlags: 0
@@ -11995,9 +12013,9 @@ MonoBehaviour:
   m_UseCameraSpace: 1
   m_ReactionSettings:
     m_SecondaryNoise: {fileID: 0}
-    m_AmplitudeGain: 1
-    m_FrequencyGain: 1
-    m_Duration: 1
+    m_AmplitudeGain: 2
+    m_FrequencyGain: 2
+    m_Duration: 2
     m_NoiseOffsets: {x: -199.68066, y: 399.00156, z: -483.0543}
 --- !u!114 &972757800
 MonoBehaviour:
@@ -16873,7 +16891,7 @@ MonoBehaviour:
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-    m_ImpulseDuration: 0.2
+    m_ImpulseDuration: 2
     m_ImpulseType: 0
     m_DissipationRate: 0.25
     m_RawSignal: {fileID: 0}
@@ -18880,7 +18898,7 @@ PlayableDirector:
   - key: {fileID: 7807377156543505580, guid: fe71549de96b5c243b4c128a7f435a46, type: 2}
     value: {fileID: 509073569}
   - key: {fileID: 8956958168186871138, guid: fe71549de96b5c243b4c128a7f435a46, type: 2}
-    value: {fileID: 0}
+    value: {fileID: 1155603482}
   - key: {fileID: 7641944638525148009, guid: fe71549de96b5c243b4c128a7f435a46, type: 2}
     value: {fileID: 782124932}
   - key: {fileID: -7660227664754240975, guid: fe71549de96b5c243b4c128a7f435a46, type: 2}
@@ -18891,6 +18909,8 @@ PlayableDirector:
     value: {fileID: 2077366135}
   - key: {fileID: 7159904028827681703, guid: fe71549de96b5c243b4c128a7f435a46, type: 2}
     value: {fileID: 2108827467}
+  - key: {fileID: 532818581617975667, guid: fe71549de96b5c243b4c128a7f435a46, type: 2}
+    value: {fileID: 1457820109}
   m_ExposedReferences:
     m_References:
     - ab6f5a9563a4a0a48ba7a878aec8d055: {fileID: 2108827463}
@@ -19815,6 +19835,7 @@ MonoBehaviour:
     m_Bits: 64
   particulasSalto: {fileID: 1803464998}
   animator: {fileID: 1842268140}
+  tiempoCoyote: 0.1
 --- !u!50 &1842268142
 Rigidbody2D:
   serializedVersion: 4
@@ -21976,7 +21997,7 @@ Camera:
   far clip plane: 1000
   field of view: 34
   orthographic: 1
-  orthographic size: 8
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -22000,7 +22021,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2061554920}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 51.89, y: 4.6000004, z: -10}
+  m_LocalPosition: {x: 51.89, y: 4.4, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
