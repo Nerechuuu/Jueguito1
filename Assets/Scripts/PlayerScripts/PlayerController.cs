@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections;
- 
+
 public class PlayerController : MonoBehaviour
 {
     [Header("Movimiento")]
@@ -38,6 +38,10 @@ public class PlayerController : MonoBehaviour
     [Header("Animator")]
     [SerializeField] private Animator animator;
 
+    [Header("Coyote Time")]
+    [SerializeField] private float tiempoCoyote = 0.1f; // Tiempo permitido después de salir del suelo
+    private float tiempoDesdeQueSalioDelSuelo; // Temporizador para Coyote Time
+
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
     private bool puedeSaltar;
@@ -69,7 +73,7 @@ public class PlayerController : MonoBehaviour
 
         // Salto con teclas W, Espacio, Flecha Arriba y botón X del mando
         if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)
-            || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetButtonDown("Jump")) && puedeSaltar)
+            || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetButtonDown("Jump")) && PuedeUsarCoyoteTime())
         {
             Saltar();
         }
@@ -81,8 +85,25 @@ public class PlayerController : MonoBehaviour
 
     private void VerificarSuelo()
     {
+        bool estabaEnSuelo = estaEnSuelo;
         estaEnSuelo = Physics2D.OverlapCircle(puntoSuelo.position, radioDeteccion, capaSuelo);
-        puedeSaltar = estaEnSuelo;
+
+        if (estaEnSuelo)
+        {
+            tiempoDesdeQueSalioDelSuelo = 0; // Reiniciar el temporizador si estamos en el suelo
+        }
+        else if (estabaEnSuelo && !estaEnSuelo)
+        {
+            tiempoDesdeQueSalioDelSuelo = Time.time; // Registrar el tiempo al salir del suelo
+        }
+
+        puedeSaltar = estaEnSuelo; // Esto sigue igual para compatibilidad con otras partes del script
+    }
+
+    private bool PuedeUsarCoyoteTime()
+    {
+        // Permitir el salto si está en el suelo o si estamos dentro del tiempo Coyote
+        return estaEnSuelo || Time.time - tiempoDesdeQueSalioDelSuelo <= tiempoCoyote;
     }
 
     private void Saltar()
