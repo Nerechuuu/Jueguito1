@@ -1,18 +1,17 @@
 using UnityEngine;
 using Cinemachine;
+using UnityEngine.Playables;
 using System.Collections;
 
 public class SalaEstatuaTrigger : MonoBehaviour
 {
-    public CinemachineVirtualCamera camaraJugador; // Cámara que sigue al jugador
-    public CinemachineVirtualCamera camaraEstatua; // Cámara que muestra la estatua
-    public PlayerController playerController; // Controlador del jugador
+    public CinemachineVirtualCamera camaraJugador;
+    public CinemachineVirtualCamera camaraEstatua;
+    public PlayerController playerController;
+    public PlayableDirector directorCinematica;
 
-    [Header("Duración de la Animación")]
-    public float duracionAnimacion = 2f; // Tiempo para simular la animación de la estatua
-
-    private bool eventoActivado = false; // Bandera para asegurarnos de que ocurre solo una vez
-    private Animator playerAnimator; // Referencia al Animator del jugador
+    private bool eventoActivado = false;
+    private Animator playerAnimator;
 
     private void Start()
     {
@@ -34,15 +33,12 @@ public class SalaEstatuaTrigger : MonoBehaviour
     {
         eventoActivado = true;
 
-        // 1. Bloquear el control del jugador y detener su movimiento
+        // Bloquear control del jugador
         if (playerController != null)
         {
             playerController.enabled = false;
-
-            // Detener el movimiento, por si el jugador está en movimiento
             playerController.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 
-            // Forzar el estado de animación Idle
             if (playerAnimator != null)
             {
                 playerAnimator.SetBool("IsWalking", false);
@@ -52,30 +48,39 @@ public class SalaEstatuaTrigger : MonoBehaviour
             }
         }
 
-        // 2. Cambiar a la cámara de la estatua
-        camaraJugador.Priority = 0; // Bajar prioridad de la cámara del jugador
-        camaraEstatua.Priority = 10; // Aumentar prioridad de la cámara de la estatua
+        // Cambiar a cámara de la estatua
+        camaraJugador.Priority = 0;
+        camaraEstatua.Priority = 10;
 
-        // 3. Simular la animación (espera la duración)
-        Debug.Log("Reproduciendo animación de la estatua...");
-        yield return new WaitForSeconds(duracionAnimacion);
+        // Esperar 1 segundo antes de empezar la cinemática
+        yield return new WaitForSeconds(2.5f);
+        
+        // Reproducir la cinemática
+        if (directorCinematica != null)
+        {
+            directorCinematica.Play();
 
-        // 4. Cambiar de nuevo a la cámara del jugador
-        camaraEstatua.Priority = 0; // Bajar prioridad de la cámara de la estatua
-        camaraJugador.Priority = 10; // Aumentar prioridad de la cámara del jugador
+            // Esperar hasta que termine la cinemática
+            float tiempoEspera = 0f;
+            float tiempoMaximoEspera = 4f; // Evitar que se quede atrapado en el ciclo
+            while (directorCinematica.state == PlayState.Playing && tiempoEspera < tiempoMaximoEspera)
+            {
+                tiempoEspera += Time.deltaTime;
+                yield return null;
+            }
+        }
 
-        // 5. Restaurar el control del jugador
+        // Restaurar cámara y control del jugador
+        camaraEstatua.Priority = 0;
+        camaraJugador.Priority = 10;
+
         if (playerController != null)
         {
             playerController.enabled = true;
-
-            // Dejar que el Animator vuelva a comportarse de manera normal
             if (playerAnimator != null)
             {
                 playerAnimator.SetBool("IsWalking", false);
             }
         }
-
-        Debug.Log("Animación terminada, control restaurado.");
     }
 }
