@@ -1,0 +1,16 @@
+Wrath=Ira
+Sorrow=Tristeza
+ComingSoon=Próximamente
+Back=Atrás
+Options=Opciones
+Music=Música
+FX=FX
+Fullscreen=Pantalla completa
+English=Inglés
+Spanish=Español
+Catalan=Catalán
+Play=Jugar
+Select Chapter=Seleccionar capítulo
+Controls=Controles
+Credits=Créditos
+Quit=Salir

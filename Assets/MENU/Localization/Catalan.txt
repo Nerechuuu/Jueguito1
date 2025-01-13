@@ -1,0 +1,16 @@
+Wrath=Ràbia
+Sorrow=Tristor
+ComingSoon=Disponible aviat
+Back=Enrere
+Options=Opcions
+Music=Música
+FX=FX
+Fullscreen=Pantalla completa
+English=Anglès
+Spanish=Espanyol
+Catalan=Català
+Play=Jugar
+Select Chapter=Selecciona el capítol
+Controls=Controls
+Credits=Crèdits
+Quit=Sortir
