@@ -4,65 +4,56 @@ using System.Collections;
 
 public class TriggerMano : MonoBehaviour
 {
-    public PlayableDirector animacionMoverMano; // Animación que mueve la mano al otro lado
-    public PlayableDirector animacionVolverMano; // Animación que devuelve la mano a su posición inicial
-    public TriggerMano triggerBajarMano; // Referencia al script del primer trigger para resetearlo
+    public PlayableDirector animacionMano; // Animación que mueve la mano y la devuelve
+    private PlayerController playerController; // Referencia al controlador del jugador
 
-    private bool jugadorSobreMano = false; // Para saber si el jugador está sobre la mano
+    private bool eventoActivado = false; // Evita que el trigger se active más de una vez
+
+    private void Start()
+    {
+        if (player != null)
+        {
+            playerController = player.GetComponent<PlayerController>();
+        }
+    }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player") && !jugadorSobreMano)
+        if (other.CompareTag("Player") && !eventoActivado)
         {
-            jugadorSobreMano = true;
-            StartCoroutine(MoverMano());
+            StartCoroutine(ActivarEvento());
         }
     }
 
-    private void OnTriggerExit2D(Collider2D other)
+    private IEnumerator ActivarEvento()
     {
-        if (other.CompareTag("Player") && jugadorSobreMano)
-        {
-            jugadorSobreMano = false;
-            StartCoroutine(VolverMano());
-        }
-    }
+        eventoActivado = true;
 
-    private IEnumerator MoverMano()
-    {
-        // Espera 2 segundos antes de iniciar la animación
-        yield return new WaitForSeconds(2f);
-
-        if (animacionMoverMano != null)
+        // 1. Bloquear el control del jugador
+        if (playerController != null)
         {
-            animacionMoverMano.Play();
-            Debug.Log("Animación de mover mano iniciada.");
+            playerController.enabled = false;
+            playerController.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         }
 
-        yield return new WaitForSeconds(9f);
-
-        if (animacionMoverMano != null)
+        // 2. Iniciar la animación del Timeline
+        if (animacionMano != null)
         {
-            animacionMoverMano.Stop();
-            Debug.Log("Animación de mover mano detenida.");
-        }
-    }
-
-    private IEnumerator VolverMano()
-    {
-        if (animacionVolverMano != null)
-        {
-            animacionVolverMano.Play();
-            Debug.Log("Animación de volver mano iniciada.");
+            animacionMano.Play();
+            Debug.Log("Iniciando animación de la mano...");
         }
 
-        // Espera 5 segundos para que la animación termine
-        yield return new WaitForSeconds(12f);
+        // 3. Esperar a que termine la animación
+        yield return new WaitForSeconds((float)animacionMano.duration);
 
-        if (animacionVolverMano != null)
+        // 4. Restaurar el control del jugador
+        if (playerController != null)
         {
-            animacionVolverMano.Stop();
-            Debug.Log("Animación de volver mano detenida.");
+            playerController.enabled = true;
+            Debug.Log("Control del jugador restaurado.");
         }
+
+        // 5. Reiniciar la variable para permitir que el trigger se active de nuevo
+        eventoActivado = false;
     }
 }
