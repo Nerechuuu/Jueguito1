@@ -1,0 +1,16 @@
+Wrath=Wrath
+Sorrow=Sorrow
+ComingSoon=Coming Soon
+Back=Back
+Options=Options
+Music=Music
+FX=FX
+Fullscreen=Fullscreen
+English=English
+Spanish=Spanish
+Catalan=Catalan
+Play=Play
+Select Chapter=Select Chapter
+Controls=Controls
+Credits=Credits
+Quit=Quit
