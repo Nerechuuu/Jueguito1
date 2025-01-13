@@ -19,18 +19,18 @@ public class Pause : MonoBehaviour
 
     void Awake()
     {
-        audioMixer.SetFloat("MusicVolumen", SaveSettings.Instance.musicVolum);
-        audioMixer2.SetFloat("FXVolumen", SaveSettings.Instance.fxVolum);
+        //audioMixer.SetFloat("MusicVolumen", SaveSettings.Instance.musicVolum);
+        //audioMixer2.SetFloat("FXVolumen", SaveSettings.Instance.fxVolum);
 
-        volumeMusicSlider.value = SaveSettings.Instance.musicVolum;
-        volumeFXSlider.value = SaveSettings.Instance.fxVolum;
+       // volumeMusicSlider.value = SaveSettings.Instance.musicVolum;
+       // volumeFXSlider.value = SaveSettings.Instance.fxVolum;
     }
 
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P) || Input.GetButtonDown("PS4Options"))
         {
             if (currentState == stateGame.CONTINUE)
             {
