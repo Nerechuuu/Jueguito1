@@ -79,16 +79,13 @@ namespace GoodbyeBuddy
 
         private void UpdateHorizontalOffset()
         {
-            // Determina la direcci�n del jugador usando flipX
             bool isFacingRight = !_playerSpriteRenderer.flipX;
 
-            // Ajusta el desplazamiento horizontal basado en la direcci�n
             _framingTransposer.m_TrackedObjectOffset.x = isFacingRight ? offsetRight : offsetLeft;
         }
 
         private void UpdateCameraZoom()
         {
-            // Determina el zoom basado en el tamaño actual del personaje
             float newZoomTarget = zoomNormal;
 
             if (_playerController.EstaEnNivelDeReduccion(3))

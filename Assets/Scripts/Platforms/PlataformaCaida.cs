@@ -15,7 +15,7 @@ public class PlataformaCaida : MonoBehaviour
 {
     rb = GetComponent<Rigidbody2D>();
     rb.bodyType = RigidbodyType2D.Static;
-    rb.constraints = RigidbodyConstraints2D.FreezeRotation; // Evita que la plataforma gire
+    rb.constraints = RigidbodyConstraints2D.FreezeRotation; 
 }
 
 
@@ -45,7 +45,6 @@ public class PlataformaCaida : MonoBehaviour
 
     private void OnCollisionExit2D(Collision2D collision)
     {
-        // Si el jugador sale de la plataforma, reseteamos las referencias
         if (((1 << collision.gameObject.layer) & capaJugador) != 0)
         {
             PlayerController jugador = collision.gameObject.GetComponent<PlayerController>();

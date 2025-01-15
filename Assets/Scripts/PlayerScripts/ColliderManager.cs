@@ -13,13 +13,12 @@ public class ColliderManager : MonoBehaviour
     [SerializeField] private Vector2 colliderWalkSize = new Vector2(1.2f, 2);
     [SerializeField] private Vector2 colliderJumpSize = new Vector2(1, 1.8f);
     [SerializeField] private Vector2 colliderFallSize = new Vector2(1, 1.5f);
-    [SerializeField] private Vector2 colliderGlidingSize = new Vector2(1, 1.2f); // Nuevo tamaño para Glide
+    [SerializeField] private Vector2 colliderGlidingSize = new Vector2(1, 1.2f);
 
     private BoxCollider2D boxCollider;
 
     private void Awake()
     {
-        // Aseguramos que sea un BoxCollider2D para este ejemplo
         boxCollider = collider2D as BoxCollider2D;
 
         if (boxCollider == null)
@@ -32,13 +31,12 @@ public class ColliderManager : MonoBehaviour
     {
         if (boxCollider == null) return;
 
-        // Actualizamos el tamaño del collider según la animación
         UpdateColliderSize();
     }
 
     private void UpdateColliderSize()
     {
-        if (animator.GetBool("IsGliding")) // Verifica si el personaje está planeando
+        if (animator.GetBool("IsGliding"))
         {
             boxCollider.size = colliderGlidingSize;
         }

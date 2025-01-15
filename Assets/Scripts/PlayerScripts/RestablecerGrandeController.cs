@@ -37,7 +37,6 @@ public class RestablecerGrandeController : MonoBehaviour
 
         objetoAActivar2.SetActive(true);
 
-        // Bloquear control del jugador y animaciones, excepto idle
         player.enabled = false;
         player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
         Animator animator = player.GetComponent<Animator>();
@@ -72,7 +71,6 @@ public class RestablecerGrandeController : MonoBehaviour
 
         yield return new WaitForSeconds(2f);
 
-        // Iniciar la cinemática del timeline
             playableDirector.Play();
 
         yield return new WaitForSeconds(5f);
@@ -83,24 +81,21 @@ public class RestablecerGrandeController : MonoBehaviour
     private IEnumerator HacerShake()
     {
 
-        // Guardamos la posición inicial de la cámara
         Vector3 posicionInicial = camaraCinematica.transform.localPosition;
 
         float tiempo = 0;
         while (tiempo < duracionShake)
         {
-            // Generar un movimiento aleatorio para el "shake"
             float offsetX = Random.Range(-1f, 1f) * intensidadShake;
             float offsetY = Random.Range(-1f, 1f) * intensidadShake;
 
-            // Aplicar el movimiento a la cámara
+
             camaraCinematica.transform.localPosition = new Vector3(posicionInicial.x + offsetX, posicionInicial.y + offsetY, posicionInicial.z);
 
             tiempo += Time.deltaTime;
             yield return null;
         }
 
-        // Restaurar la posición original de la cámara
         camaraCinematica.transform.localPosition = posicionInicial;
     }
 }

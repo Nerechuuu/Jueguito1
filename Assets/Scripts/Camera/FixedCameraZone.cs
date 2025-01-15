@@ -3,8 +3,8 @@ using Cinemachine;
 
 public class FixedCameraZone : MonoBehaviour
 {
-    public CinemachineVirtualCamera mainCamera; // Cámara que sigue al jugador
-    public CinemachineVirtualCamera fixedCamera; // Cámara fija
+    public CinemachineVirtualCamera mainCamera;
+    public CinemachineVirtualCamera fixedCamera;
 
     private void OnTriggerEnter2D(Collider2D other)
     {
@@ -13,7 +13,6 @@ public class FixedCameraZone : MonoBehaviour
             fixedCamera.Priority = 10;
             mainCamera.Priority = 0;
 
-            // Aseguramos que la posición Z sea consistente
             fixedCamera.transform.position = new Vector3(
                 fixedCamera.transform.position.x,
                 fixedCamera.transform.position.y,

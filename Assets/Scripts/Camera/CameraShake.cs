@@ -10,12 +10,12 @@ public class CameraShake : MonoBehaviour
 
     private float timer;
     private CinemachineBasicMultiChannelPerlin _cbmp;
-    private PlayerController _playerController; // Referencia al controlador del jugador
+    private PlayerController _playerController;
 
     void Awake()
     {
         CinemachineVirtualCamera = GetComponent<CinemachineVirtualCamera>();
-        _playerController = FindObjectOfType<PlayerController>(); // Encuentra al jugador en la escena
+        _playerController = FindObjectOfType<PlayerController>();
     }
 
     private void Start()
@@ -38,7 +38,6 @@ public class CameraShake : MonoBehaviour
 
     void Update()
     {
-        // Si el jugador está en modo grande y presiona el botón de salto (aquí se usa Space como ejemplo)
         if (_playerController.EsGrande() && Input.GetKeyDown(KeyCode.Space))
         {
             ShakeCamera();

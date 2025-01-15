@@ -10,7 +10,6 @@ public class SaveSettings : MonoBehaviour
     {
         get
         {
-            // If the instance is null, find it in the scene
             if (_instance == null)
             {
                 _instance = Object.FindFirstObjectByType<SaveSettings>();
@@ -25,14 +24,13 @@ public class SaveSettings : MonoBehaviour
 
     private void Awake()
     {
-        // Check if instance already exists
         if (_instance != null)
         {
-            Destroy(gameObject); // Destroy this instance if it already exists
+            Destroy(gameObject);
         }
         else
         {
-            _instance = this; // Set the instance to this
+            _instance = this;
         }
         DontDestroyOnLoad(gameObject);
     }

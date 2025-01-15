@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class DestructionMode : MonoBehaviour
 {
-    // Start is called before the first frame update
     void Start()
     {
         
@@ -42,7 +41,6 @@ public class DestructionMode : MonoBehaviour
         }
     }
 
-    // Update is called once per frame
     void Update()
     {
         

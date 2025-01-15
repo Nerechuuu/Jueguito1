@@ -7,20 +7,19 @@ public class PlataformaMovil : MonoBehaviour
     [SerializeField] private Transform puntoA;
     [SerializeField] private Transform puntoB;
 
-    [Header("Configuración de movimiento")]
+    [Header("Configuraciï¿½n de movimiento")]
     [SerializeField] private float velocidad = 2f;
     [SerializeField] private LayerMask capaJugador;
-    [SerializeField] private LayerMask capaSuelo; // Asegúrate de incluir la capa suelo que contiene a la plataforma
+    [SerializeField] private LayerMask capaSuelo;
 
     private Rigidbody2D rb;
     private PlayerController jugadorActual;
     private bool jugadorCerca;
 
-    // Dirección del empuje: 1 hacia B, -1 hacia A, 0 sin empuje
     private int direccionEmpuje = 0;
 
     private Collider2D miCollider;
-    private Transform puntoSueloJugador; // Referencia al puntoSuelo del jugador
+    private Transform puntoSueloJugador;
 
     private void Awake()
     {
@@ -36,23 +35,19 @@ public class PlataformaMovil : MonoBehaviour
             bool jugadorEncima = false;
             if (puntoSueloJugador != null)
             {
-                // Revisamos si el puntoSuelo del jugador detecta esta plataforma
                 Collider2D sueloDetectado = Physics2D.OverlapCircle(puntoSueloJugador.position, 0.2f, capaSuelo);
                 if (sueloDetectado == miCollider)
                 {
-                    // El jugador está encima de la plataforma
                     jugadorEncima = true;
                 }
             }
 
             if (jugadorEncima)
             {
-                // Si el jugador está encima, no se mueve la plataforma
                 direccionEmpuje = 0;
             }
             else
             {
-                // Jugador está al costado, ver si empuja
                 float inputHorizontal = Input.GetAxisRaw("Horizontal");
                 if (inputHorizontal > 0.1f)
                 {
@@ -80,17 +75,14 @@ public class PlataformaMovil : MonoBehaviour
     {
         if (direccionEmpuje == 1)
         {
-            // Mover hacia B
             Vector3 nuevaPosicion = Vector3.MoveTowards(transform.position, puntoB.position, velocidad * Time.deltaTime);
             transform.position = nuevaPosicion;
         }
         else if (direccionEmpuje == -1)
         {
-            // Mover hacia A
             Vector3 nuevaPosicion = Vector3.MoveTowards(transform.position, puntoA.position, velocidad * Time.deltaTime);
             transform.position = nuevaPosicion;
         }
-        // Si direccionEmpuje == 0, la plataforma no se mueve
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -102,9 +94,6 @@ public class PlataformaMovil : MonoBehaviour
             {
                 jugadorCerca = true;
                 jugadorActual = jugador;
-
-                // Buscamos el puntoSuelo del jugador por nombre.
-                // Asegúrate que el objeto hijo se llame exactamente "puntoSuelo".
                 puntoSueloJugador = jugadorActual.transform.Find("Punto Suelo");
             }
         }

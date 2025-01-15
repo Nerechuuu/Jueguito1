@@ -11,7 +11,6 @@ namespace GoodbyeBuddy
         private CinemachineFramingTransposer _framingTransposer;
         private PlayerController _playerController;
 
-        // Configuración de Zoom
         public float zoomNormal = 5f;
         public float zoomAumentado2 = 20f;
         public float zoomAumentado = 7f;
@@ -25,13 +24,12 @@ namespace GoodbyeBuddy
         private float _currentZoomTarget;
         private bool isZoomCoroutineRunning = false;
 
-        // Configuración de offsets
         public float offsetRight = 0.5f;
         public float offsetLeft = -0.5f;
         public float verticalOffsetAdjustment = -0.5f;
         public float smoothReturnSpeed = 1.8f;
 
-        private SpriteRenderer _playerSpriteRenderer; // Para acceder al flipX del jugador
+        private SpriteRenderer _playerSpriteRenderer;
 
         private void Start()
         {
@@ -48,7 +46,7 @@ namespace GoodbyeBuddy
 
             if (virtualCamera.m_Lens.Orthographic)
             {
-                _currentZoomTarget = virtualCamera.m_Lens.OrthographicSize; // Tamaño inicial de la cámara
+                _currentZoomTarget = virtualCamera.m_Lens.OrthographicSize;
             }
             else
             {
@@ -65,10 +63,8 @@ namespace GoodbyeBuddy
 
         private void UpdateHorizontalOffset()
         {
-            // Determina la dirección del jugador usando flipX
             bool isFacingRight = !_playerSpriteRenderer.flipX;
 
-            // Ajusta el desplazamiento horizontal basado en la dirección
             _framingTransposer.m_TrackedObjectOffset.x = isFacingRight ? offsetRight : offsetLeft;
         }
 
@@ -76,7 +72,6 @@ namespace GoodbyeBuddy
         {
             float playerVelocityY = _playerController.GetComponent<Rigidbody2D>().velocity.y;
 
-            // Ajuste del desplazamiento vertical basado en la velocidad y centro del personaje
             float verticalTarget = verticalOffsetAdjustment;
             _framingTransposer.m_TrackedObjectOffset.y = Mathf.Lerp(
                 _framingTransposer.m_TrackedObjectOffset.y,
@@ -87,7 +82,6 @@ namespace GoodbyeBuddy
 
         private void UpdateCameraZoom()
         {
-            // Determina el zoom basado en el tamaño actual del personaje
             float newZoomTarget = zoomNormal;
 
             if (_playerController.EstaEnNivelDeReduccion(3))

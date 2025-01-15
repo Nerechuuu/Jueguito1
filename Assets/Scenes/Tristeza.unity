@@ -13371,6 +13371,8 @@ MonoBehaviour:
   FirstCollider: {fileID: 1093020318}
   SecondCollider: {fileID: 1093020315}
   changeInterval: 2
+  spriteRenderer: {fileID: 0}
+  isFirstSprite: 1
 --- !u!61 &1093020318
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -20503,7 +20505,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   animacionMano: {fileID: 582395576}
   playerController: {fileID: 1842268141}
-  playerRigidbody: {fileID: 1842268142}
 --- !u!1 &1947160412
 GameObject:
   m_ObjectHideFlags: 0

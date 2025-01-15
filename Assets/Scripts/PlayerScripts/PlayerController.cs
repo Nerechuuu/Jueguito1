@@ -66,6 +66,12 @@ public class PlayerController : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
     }
 
+    public bool BloqueadoPorAnimacion
+{
+    get { return bloqueadoPorAnimacion; }
+    set { bloqueadoPorAnimacion = value; }
+}
+
     private void Update()
     {
         if (bloqueadoPorAnimacion)
