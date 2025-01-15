@@ -2638,7 +2638,7 @@ GameObject:
   m_Component:
   - component: {fileID: 261574682}
   - component: {fileID: 261574684}
-  - component: {fileID: 261574683}
+  - component: {fileID: 261574685}
   m_Layer: 0
   m_Name: PointCameraFix
   m_TagString: Untagged
@@ -2654,29 +2654,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 261574681}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 63.578568, y: -15.543035, z: 9.345482}
+  m_LocalPosition: {x: 63.2, y: -15.543035, z: 9.345482}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 482925360}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &261574683
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 261574681}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cd89a6183675ef24ca1a7ff20c2cab06, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  camaraJugador: {fileID: 1787497679}
-  camaraEstatua: {fileID: 482925359}
-  playerController: {fileID: 1504643958}
-  directorCinematica: {fileID: 0}
 --- !u!61 &261574684
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -2722,6 +2706,21 @@ BoxCollider2D:
   serializedVersion: 2
   m_Size: {x: 2.8614807, y: 10.213417}
   m_EdgeRadius: 0
+--- !u!114 &261574685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 261574681}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 82ce77182d95c4c4d8d08e0890973bf5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  camaraJugador: {fileID: 1787497679}
+  camaraBridge: {fileID: 1689200246}
+  playerController: {fileID: 1504643958}
 --- !u!1 &292744704
 GameObject:
   m_ObjectHideFlags: 0
