@@ -40,8 +40,8 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Animator animator;
 
     [Header("Coyote Time")]
-    [SerializeField] private float tiempoCoyote = 0.1f; // Tiempo permitido después de salir del suelo
-    private float tiempoDesdeQueSalioDelSuelo; // Temporizador para Coyote Time
+    [SerializeField] private float tiempoCoyote = 0.1f;
+    private float tiempoDesdeQueSalioDelSuelo;
 
     [Header("Cámaras")]
     public CinemachineVirtualCamera mainCamera;
@@ -88,7 +88,6 @@ public class PlayerController : MonoBehaviour
             spriteRenderer.flipX = inputHorizontal < 0;
         }
 
-        // Salto con teclas W, Espacio, Flecha Arriba y botón X del mando
         if ((Input.GetKeyDown(KeyCode.W) || Input.GetKeyDown(KeyCode.Space)
             || Input.GetKeyDown(KeyCode.UpArrow) || Input.GetButtonDown("Jump")) && PuedeUsarCoyoteTime())
         {
@@ -107,23 +106,22 @@ public class PlayerController : MonoBehaviour
 
         if (estaEnSuelo)
         {
-            tiempoDesdeQueSalioDelSuelo = 0; // Reiniciar el temporizador si estamos en el suelo
-            if (!estabaEnSuelo) // Si el jugador acaba de aterrizar
+            tiempoDesdeQueSalioDelSuelo = 0;
+            if (!estabaEnSuelo)
             {
-                StartCoroutine(AplicarShake()); // Aplicar shake
+                //StartCoroutine(AplicarShake()); 
             }
         }
         else if (estabaEnSuelo && !estaEnSuelo)
         {
-            tiempoDesdeQueSalioDelSuelo = Time.time; // Registrar el tiempo al salir del suelo
+            tiempoDesdeQueSalioDelSuelo = Time.time; 
         }
 
-        puedeSaltar = estaEnSuelo; // Esto sigue igual para compatibilidad con otras partes del script
+        puedeSaltar = estaEnSuelo;
     }
 
     private bool PuedeUsarCoyoteTime()
     {
-        // Permitir el salto si está en el suelo o si estamos dentro del tiempo Coyote
         return estaEnSuelo || Time.time - tiempoDesdeQueSalioDelSuelo <= tiempoCoyote;
     }
 
@@ -142,7 +140,7 @@ public class PlayerController : MonoBehaviour
         PlataformaToggle.AlternarGrupos();
     }
 
-    private IEnumerator AplicarShake()
+    /*private IEnumerator AplicarShake()
     {
         if (nivelEncogimiento == 4 || nivelEncogimiento == 5)
         {
@@ -182,7 +180,7 @@ public class PlayerController : MonoBehaviour
             mainCamera.Follow = objetoSeguidoOriginal;
             secondaryCamera3.Follow = objetoSeguidoOriginal2;
         }
-    }
+    }*/
 
     private void AjustarGravedad()
     {
