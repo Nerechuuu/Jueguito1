@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using Cinemachine;
 
 public class PlayerController : MonoBehaviour
 {
@@ -41,6 +42,16 @@ public class PlayerController : MonoBehaviour
     [Header("Coyote Time")]
     [SerializeField] private float tiempoCoyote = 0.1f; // Tiempo permitido después de salir del suelo
     private float tiempoDesdeQueSalioDelSuelo; // Temporizador para Coyote Time
+
+    [Header("Cámaras")]
+    public CinemachineVirtualCamera mainCamera;
+    public CinemachineVirtualCamera secondaryCamera1;
+    public CinemachineVirtualCamera secondaryCamera2;
+    public CinemachineVirtualCamera secondaryCamera3;
+
+    [Header("Shake")]
+    [SerializeField] private float shakeIntensity = 3f;
+    [SerializeField] private float shakeDuration = 0.2f;
 
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
@@ -91,6 +102,10 @@ public class PlayerController : MonoBehaviour
         if (estaEnSuelo)
         {
             tiempoDesdeQueSalioDelSuelo = 0; // Reiniciar el temporizador si estamos en el suelo
+            if (!estabaEnSuelo) // Si el jugador acaba de aterrizar
+            {
+                StartCoroutine(AplicarShake()); // Aplicar shake
+            }
         }
         else if (estabaEnSuelo && !estaEnSuelo)
         {
@@ -119,6 +134,48 @@ public class PlayerController : MonoBehaviour
         rb.velocity = new Vector2(rb.velocity.x, fuerzaSalto);
 
         PlataformaToggle.AlternarGrupos();
+    }
+
+    private IEnumerator AplicarShake()
+    {
+        if (nivelEncogimiento == 4 || nivelEncogimiento == 5)
+        {
+            Transform objetoSeguidoOriginal = mainCamera.Follow;
+            Transform objetoSeguidoOriginal2 = secondaryCamera3.Follow;
+            mainCamera.Follow = null;
+            secondaryCamera3.Follow = null;
+
+            Vector3 posicionInicial1 = secondaryCamera1.transform.localPosition;
+            Vector3 posicionInicial2 = secondaryCamera2.transform.localPosition;
+            Vector3 posicionInicialMC = mainCamera.transform.localPosition;
+            Vector3 posicionInicial3 = secondaryCamera3.transform.localPosition;
+
+            float tiempo = 0;
+            while (tiempo < shakeDuration)
+            {
+                // Generar un movimiento aleatorio para el "shake"
+                float offsetX = Random.Range(-1f, 1f) * shakeIntensity;
+                float offsetY = Random.Range(-1f, 1f) * shakeIntensity;
+
+                // Aplicar el movimiento a la cámara
+                secondaryCamera1.transform.localPosition = new Vector3(posicionInicial1.x + offsetX, posicionInicial1.y + offsetY, posicionInicial1.z);
+                secondaryCamera2.transform.localPosition = new Vector3(posicionInicial2.x + offsetX, posicionInicial2.y + offsetY, posicionInicial2.z);
+                mainCamera.transform.localPosition = new Vector3(posicionInicialMC.x + offsetX, posicionInicialMC.y + offsetY, posicionInicialMC.z);
+                secondaryCamera3.transform.localPosition = new Vector3(posicionInicial3.x + offsetX, posicionInicial3.y + offsetY, posicionInicial3.z);
+
+                tiempo += Time.deltaTime;
+                yield return null;
+            }
+
+            // Restaurar la posición original de la cámara
+            secondaryCamera1.transform.localPosition = posicionInicial1;
+            secondaryCamera2.transform.localPosition = posicionInicial2;
+            mainCamera.transform.localPosition = posicionInicialMC;
+            secondaryCamera3.transform.localPosition = posicionInicial3;
+
+            mainCamera.Follow = objetoSeguidoOriginal;
+            secondaryCamera3.Follow = objetoSeguidoOriginal2;
+        }
     }
 
     private void AjustarGravedad()
@@ -236,6 +293,12 @@ public class PlayerController : MonoBehaviour
 
     public void CrecerANivel2()
     {
+        // Iniciar la cinemática
+        FindObjectOfType<FinalCinematicIraController>()?.IniciarCinematica();
+    }
+
+    public void CrecerANivel2Si()
+    {
         nivelEncogimiento = 5;
         CambiarEscala(escalaCrecido2);
     }
@@ -247,6 +310,12 @@ public class PlayerController : MonoBehaviour
     }
 
     public void RestablecerDesdeCrecido2()
+    {
+
+        FindObjectOfType<RestablecerGrandeController>()?.Restablecer();
+    }
+
+    public void RestablecerDesdeCrecido2Si()
     {
         if (nivelEncogimiento == 5)
         {
