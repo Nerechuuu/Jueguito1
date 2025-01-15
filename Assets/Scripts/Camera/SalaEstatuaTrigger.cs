@@ -13,6 +13,9 @@ public class SalaEstatuaTrigger : MonoBehaviour
     private bool eventoActivado = false;
     private Animator playerAnimator;
 
+    private float intensidadShake = 0.8f;
+    private float duracionShake = 0.8f;
+
     private void Start()
     {
         if (playerController != null)
@@ -33,44 +36,35 @@ public class SalaEstatuaTrigger : MonoBehaviour
     {
         eventoActivado = true;
 
-        // Bloquear control del jugador
-        if (playerController != null)
-        {
-            playerController.enabled = false;
-            playerController.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
+        playerController.enabled = false;
+        playerController.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
 
-            if (playerAnimator != null)
-            {
-                playerAnimator.SetBool("IsWalking", false);
-                playerAnimator.SetBool("IsJumping", false);
-                playerAnimator.SetBool("IsFalling", false);
-                playerAnimator.SetBool("IsGliding", false);
-            }
+        if (playerAnimator != null)
+        {
+            playerAnimator.SetBool("IsWalking", false);
+            playerAnimator.SetBool("IsJumping", false);
+            playerAnimator.SetBool("IsFalling", false);
+            playerAnimator.SetBool("IsGliding", false);
         }
 
-        // Cambiar a cámara de la estatua
         camaraJugador.Priority = 0;
         camaraEstatua.Priority = 10;
 
-        // Esperar 1 segundo antes de empezar la cinemática
-        yield return new WaitForSeconds(2.5f);
-        
-        // Reproducir la cinemática
-        if (directorCinematica != null)
-        {
-            directorCinematica.Play();
+        yield return new WaitForSeconds(2f);
 
-            // Esperar hasta que termine la cinemática
-            float tiempoEspera = 0f;
-            float tiempoMaximoEspera = 4f; // Evitar que se quede atrapado en el ciclo
-            while (directorCinematica.state == PlayState.Playing && tiempoEspera < tiempoMaximoEspera)
-            {
-                tiempoEspera += Time.deltaTime;
-                yield return null;
-            }
+        yield return StartCoroutine(HacerShake());
+        
+        directorCinematica.Play();
+
+        float tiempoEspera = 0f;
+        float tiempoMaximoEspera = 4f; 
+
+        while (directorCinematica.state == PlayState.Playing && tiempoEspera < tiempoMaximoEspera)
+        {
+            tiempoEspera += Time.deltaTime;
+           yield return null;
         }
 
-        // Restaurar cámara y control del jugador
         camaraEstatua.Priority = 0;
         camaraJugador.Priority = 10;
 
@@ -83,4 +77,25 @@ public class SalaEstatuaTrigger : MonoBehaviour
             }
         }
     }
+
+     private IEnumerator HacerShake()
+    {
+        Vector3 posicionInicial = camaraEstatua.transform.localPosition;
+
+        float tiempo = 0;
+        while (tiempo < duracionShake)
+        {
+
+            float offsetX = Random.Range(-1f, 1f) * intensidadShake;
+            float offsetY = Random.Range(-1f, 1f) * intensidadShake;
+
+            camaraEstatua.transform.localPosition = new Vector3(posicionInicial.x + offsetX, posicionInicial.y + offsetY, posicionInicial.z);
+
+            tiempo += Time.deltaTime;
+            yield return null;
+        }
+
+        camaraEstatua.transform.localPosition = posicionInicial;
+    }
+
 }

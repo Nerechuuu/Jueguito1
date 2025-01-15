@@ -5,14 +5,15 @@ using UnityEngine.SceneManagement;
 
 public class PlayerRespawn : MonoBehaviour
 {
+    private Vector2 respawnPoint;
     private float checkPointPositionX, checkPointPositionY;
-    
+
+    public Transform respawnTransform;
+
     void Start()
     {
-        if(PlayerPrefs.GetFloat("checkPointPositionX")!=0)
-        {
-            transform.position =(new Vector2(PlayerPrefs.GetFloat("checkPointPositionX"), PlayerPrefs.GetFloat("checkPointPositionY")));
-        }
+        respawnPoint = respawnTransform.position;
+        transform.position = respawnPoint;
     }
 
     public void ReachedCheckPoint(float x, float y)
@@ -23,6 +24,9 @@ public class PlayerRespawn : MonoBehaviour
 
     public void PlayerDied()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            checkPointPositionX = PlayerPrefs.GetFloat("checkPointPositionX");
+            checkPointPositionY = PlayerPrefs.GetFloat("checkPointPositionY");
+            transform.position = new Vector2(checkPointPositionX, checkPointPositionY);
+
     }
 }
