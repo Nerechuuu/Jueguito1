@@ -236,6 +236,12 @@ public class PlayerController : MonoBehaviour
 
     public void CrecerANivel2()
     {
+        // Iniciar la cinemática
+        FindObjectOfType<FinalCinematicIraController>()?.IniciarCinematica();
+    }
+
+    public void CrecerANivel2Si()
+    {
         nivelEncogimiento = 5;
         CambiarEscala(escalaCrecido2);
     }
@@ -247,6 +253,12 @@ public class PlayerController : MonoBehaviour
     }
 
     public void RestablecerDesdeCrecido2()
+    {
+
+        FindObjectOfType<RestablecerGrandeController>()?.Restablecer();
+    }
+
+    public void RestablecerDesdeCrecido2Si()
     {
         if (nivelEncogimiento == 5)
         {
