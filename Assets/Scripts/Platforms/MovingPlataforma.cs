@@ -9,7 +9,8 @@ public class MovingPlataform : MonoBehaviour
     public float moveDistance = 5f;
 
     private Vector3 startPosition;
-    private bool movingUp = true;
+    private bool movingRight = true;
+    private bool isActivated = false;  // Para saber si la plataforma ya ha sido activada
 
     void Start()
     {
@@ -18,17 +19,30 @@ public class MovingPlataform : MonoBehaviour
 
     void Update()
     {
-        float direction = movingUp ? 1f : -1f;
-
-        transform.position += Vector3.up * direction * moveSpeed * Time.deltaTime;
-
-        if (movingUp && transform.position.y >= startPosition.y + moveDistance)
+        if (isActivated)
         {
-            movingUp = false;
+            // Mover la plataforma solo si ha sido activada
+            float direction = movingRight ? 1f : -1f;
+
+            transform.position += Vector3.right * direction * moveSpeed * Time.deltaTime;
+
+            if (movingRight && transform.position.x >= startPosition.x + moveDistance)
+            {
+                movingRight = false;
+            }
+            else if (!movingRight && transform.position.x <= startPosition.x)
+            {
+                movingRight = true;
+            }
         }
-        else if (!movingUp && transform.position.y <= startPosition.y)
+    }
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        // Comprobar si el jugador ha tocado el trigger
+        if (other.CompareTag("Player") && !isActivated)
         {
-            movingUp = true;
+            isActivated = true;  // Activar la plataforma solo la primera vez que el jugador entra en el trigger
         }
     }
 }
