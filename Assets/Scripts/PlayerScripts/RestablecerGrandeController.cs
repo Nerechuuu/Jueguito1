@@ -73,6 +73,8 @@ public class RestablecerGrandeController : MonoBehaviour
 
             playableDirector.Play();
 
+            animator.SetBool("IsGliding", true);
+
         yield return new WaitForSeconds(5f);
 
         cinematicaEnProgreso = false;
