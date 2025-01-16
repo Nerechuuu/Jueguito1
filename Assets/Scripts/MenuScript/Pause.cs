@@ -10,7 +10,7 @@ public class Pause : MonoBehaviour
     public enum stateGame { STOP = 0, CONTINUE = 1 };
     public stateGame currentState = stateGame.CONTINUE;
 
-    public AudioSource music;//For Stop Music when use Pause Menu
+    public AudioSource music;
     
     public Slider volumeMusicSlider;
     public Slider volumeFXSlider;
@@ -27,7 +27,6 @@ public class Pause : MonoBehaviour
     }
 
 
-    // Update is called once per frame
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.P) || Input.GetButtonDown("PS4Options"))
@@ -45,13 +44,12 @@ public class Pause : MonoBehaviour
     }
     public void PauseGame()
     {
-        //pauseMenu.SetActive(true);
         this.gameObject.transform.GetChild(0).gameObject.SetActive(true);
         currentState = stateGame.STOP;
-        Time.timeScale = 0; // Stop the Game
+        Time.timeScale = 0; 
         if (music != null)
         {
-            music.Pause(); // Stop the Music
+            music.Pause(); 
         }
     }
 
@@ -60,10 +58,10 @@ public class Pause : MonoBehaviour
         this.gameObject.transform.GetChild(0).gameObject.SetActive(false);
 
         currentState = stateGame.CONTINUE;
-        Time.timeScale = 1; // Resume the Game
+        Time.timeScale = 1; 
         if (music != null)
         {
-            music.Play(); // Start the Music
+            music.Play(); 
         }
     }
 
@@ -75,7 +73,7 @@ public class Pause : MonoBehaviour
 
     public void Restart()
     {
-        Time.timeScale = 1; // Reset time scale before restarting
+        Time.timeScale = 1; 
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 

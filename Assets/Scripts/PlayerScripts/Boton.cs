@@ -13,8 +13,8 @@ public class Boton : MonoBehaviour
     [SerializeField] private float duracionTransicionColor = 0.2f;
 
     [Header("Efectos Visuales")]
-    [SerializeField] private List<EstadoParticulas> particulasPorEstado; // Lista de estados y partículas
-    [SerializeField] private Transform posicionParticulas; // Posición para las partículas (opcional)
+    [SerializeField] private List<EstadoParticulas> particulasPorEstado; 
+    [SerializeField] private Transform posicionParticulas; 
 
     private SpriteRenderer spriteRenderer;
     private Coroutine transicionCoroutine;
@@ -33,13 +33,10 @@ public class Boton : MonoBehaviour
         PlayerController jugador = other.GetComponent<PlayerController>();
         if (jugador == null) return;
 
-        // Evitar interacción si el jugador está en Crecido2, excepto con RestablecerDesdeCrecido2
         if (jugador.EstaEnNivelDeReduccion(5) && tipoBoton != TipoBoton.RestablecerDesdeCrecido2) return;
 
-        // Verificar si el estado ya está activo
         if (EstadoYaActivo(jugador)) return;
 
-        // Aplicar la acción del botón
         switch (tipoBoton)
         {
             case TipoBoton.Crecer:
@@ -65,7 +62,6 @@ public class Boton : MonoBehaviour
                 break;
         }
 
-        // Instanciar partículas específicas del estado
         InstanciarParticulas();
 
         ActivarBoton();
@@ -78,7 +74,7 @@ public class Boton : MonoBehaviour
             case TipoBoton.Crecer:
                 return jugador.EstaEnNivelDeReduccion(4);
             case TipoBoton.Crecer2:
-                return false; // Crecer2 siempre puede ejecutarse
+                return false; 
             case TipoBoton.Reducir1:
                 return jugador.EstaEnNivelDeReduccion(1);
             case TipoBoton.Reducir2:
@@ -96,15 +92,12 @@ public class Boton : MonoBehaviour
 
     private void InstanciarParticulas()
     {
-        // Buscar el prefab correspondiente al estado actual del botón
         GameObject prefabParticulas = ObtenerPrefabDeParticulas(tipoBoton);
 
         if (prefabParticulas == null) return;
 
-        // Usar la posición especificada o la posición del botón como fallback
         Vector3 posicion = posicionParticulas != null ? posicionParticulas.position : transform.position;
 
-        // Instanciar el sistema de partículas
         Instantiate(prefabParticulas, posicion, Quaternion.identity);
     }
 
@@ -115,7 +108,7 @@ public class Boton : MonoBehaviour
             if (estadoParticulas.tipoBoton == tipo)
                 return estadoParticulas.prefabParticulas;
         }
-        return null; // No se encontró un prefab para este tipo de botón
+        return null; 
     }
 
     private void ActivarBoton()
