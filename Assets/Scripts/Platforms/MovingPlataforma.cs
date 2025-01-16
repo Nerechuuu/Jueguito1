@@ -4,43 +4,53 @@ using UnityEngine;
 
 public class MovingPlataform : MonoBehaviour
 {
-    [Header("Movement Settings")]
-    public float moveSpeed = 2f;
-    public float moveDistance = 5f;
+    [Header("Platform Spawn Settings")]
+public GameObject[] platforms;          
+public GameObject triggerObject;        
+private bool isActivated = false;      
 
-    private Vector3 startPosition;
-    private bool movingRight = true;
-    private bool isActivated = false;
-
-    void Start()
+void Start()
+{
+    foreach (var platform in platforms)
     {
-        startPosition = transform.position;
+        platform.SetActive(false);
     }
+}
 
-    void Update()
+void Update()
+{
+    if (isActivated)
     {
-        if (isActivated)
+        SpawnPlatforms();
+    }
+}
+
+private void OnTriggerEnter2D(Collider2D other)
+{
+    if (other.CompareTag("Player"))
+    {
+        isActivated = true;
+    }
+}
+
+private void OnTriggerExit2D(Collider2D other)
+{
+    if (other.CompareTag("Player"))
+    {
+        isActivated = false; 
+    }
+}
+
+void SpawnPlatforms()
+{
+    foreach (var platform in platforms)
+    {
+        if (!platform.activeInHierarchy)
         {
-            float direction = movingRight ? 1f : -1f;
-
-            transform.position += Vector3.right * direction * moveSpeed * Time.deltaTime;
-
-            if (movingRight && transform.position.x >= startPosition.x + moveDistance)
-            {
-                movingRight = false;
-            }
-            else if (!movingRight && transform.position.x <= startPosition.x)
-            {
-                movingRight = true;
-            }
+            platform.SetActive(true);
+           
         }
     }
+}
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.CompareTag("Player") && !isActivated)
-        {
-            isActivated = true; 
-        }
-    }
 }

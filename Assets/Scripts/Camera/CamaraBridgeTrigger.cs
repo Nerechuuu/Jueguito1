@@ -48,7 +48,7 @@ public class CamaraBridgeTrigger : MonoBehaviour
             playerController.enabled = true;
             if (playerAnimator != null)
             {
-                playerAnimator.SetBool("IsWalking", false);
+                playerAnimator.SetBool("IsWalking", true);
             }
         }
     }

@@ -297,7 +297,6 @@ public class PlayerController : MonoBehaviour
 
     public void CrecerANivel2()
     {
-        // Iniciar la cinemática
         FindObjectOfType<FinalCinematicIraController>()?.IniciarCinematica();
     }
 
