@@ -49,9 +49,9 @@ public class PlayerController : MonoBehaviour
     public CinemachineVirtualCamera secondaryCamera2;
     public CinemachineVirtualCamera secondaryCamera3;
 
-    [Header("Shake")]
-    [SerializeField] private float shakeIntensity = 3f;
-    [SerializeField] private float shakeDuration = 0.2f;
+    //[Header("Shake")]
+    //[SerializeField] private float shakeIntensity = 3f;
+    //[SerializeField] private float shakeDuration = 0.2f;
 
     private Rigidbody2D rb;
     private SpriteRenderer spriteRenderer;
