@@ -329,7 +329,7 @@ public class PlayerController : MonoBehaviour
 
     private void CambiarEscala(Vector3 nuevaEscala)
     {
-        float duracionAnimacion = 0.5f;
+        float duracionAnimacion = 2f;
         StartCoroutine(AnimarCambioDeTamaño(nuevaEscala, duracionAnimacion));
     }
 
