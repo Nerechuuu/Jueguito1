@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - SpecialTrigger
+  - Option
   layers:
   - Default
   - TransparentFX
