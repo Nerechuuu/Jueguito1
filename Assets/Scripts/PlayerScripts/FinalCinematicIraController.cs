@@ -51,13 +51,14 @@ public class FinalCinematicIraController : MonoBehaviour
         yield return new WaitForSeconds(1f);
         yield return StartCoroutine(HacerShake());
 
-            objetoAActivar.SetActive(true);
-            objetoAActivar2.SetActive(true);
-
         camaraPrincipal.Priority = 0; 
-        camaraCinematica.Priority = 10; 
+        camaraCinematica.Priority = 10;
 
-        yield return new WaitForSeconds(8f);
+        yield return new WaitForSeconds(2f);
+        objetoAActivar.SetActive(true);
+        objetoAActivar2.SetActive(true);
+
+        yield return new WaitForSeconds(4.1f);
 
         camaraPrincipal.Priority = 10;
         camaraCinematica.Priority = 0;
