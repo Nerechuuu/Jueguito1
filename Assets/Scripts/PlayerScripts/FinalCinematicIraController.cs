@@ -19,8 +19,12 @@ public class FinalCinematicIraController : MonoBehaviour
     [SerializeField] private CinemachineVirtualCamera camaraCinematica; 
 
     [Header("GameObject a activar")]
-    [SerializeField] private GameObject objetoAActivar;
-    [SerializeField] private GameObject objetoAActivar2;
+    [SerializeField] private GameObject AnimacionAActivar;
+    [SerializeField] private GameObject AnimacionAActivar2;
+    [SerializeField] private GameObject BotonRestablecerAActivar;
+    [SerializeField] private GameObject ImagenAnimacionAActivar;
+    [SerializeField] private GameObject ImagenAnimacionAActivar2;
+
 
     private bool cinematicaEnProgreso = false;
 
@@ -34,8 +38,11 @@ public class FinalCinematicIraController : MonoBehaviour
     {
         cinematicaEnProgreso = true;
 
-            objetoAActivar.SetActive(false);
-            objetoAActivar2.SetActive(false);
+        AnimacionAActivar.SetActive(false);
+        BotonRestablecerAActivar.SetActive(false);
+        AnimacionAActivar2.SetActive(false);
+        ImagenAnimacionAActivar.SetActive(false);
+        ImagenAnimacionAActivar2.SetActive(false);
 
         player.enabled = false;
         player.GetComponent<Rigidbody2D>().velocity = Vector2.zero;
@@ -55,10 +62,19 @@ public class FinalCinematicIraController : MonoBehaviour
         camaraCinematica.Priority = 10;
 
         yield return new WaitForSeconds(2f);
-        objetoAActivar.SetActive(true);
-        objetoAActivar2.SetActive(true);
+        ImagenAnimacionAActivar2.SetActive(true);
+        AnimacionAActivar.SetActive(true);
+        BotonRestablecerAActivar.SetActive(true);
 
-        yield return new WaitForSeconds(4.1f);
+        yield return new WaitForSeconds(2f);
+        AnimacionAActivar.SetActive(false);
+
+        yield return new WaitForSeconds(1f);
+        AnimacionAActivar2.SetActive(true);
+
+        yield return new WaitForSeconds(3f);
+        ImagenAnimacionAActivar.SetActive(true);
+        AnimacionAActivar2.SetActive(false);
 
         camaraPrincipal.Priority = 10;
         camaraCinematica.Priority = 0;
